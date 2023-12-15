@@ -1,0 +1,10 @@
+{
+  "name": "docs-review",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "wuhaohao <1611499758@qq.com>",
+  "license": "MIT",
+  "dependencies": {
+    "mysql": "^2.18.1"
+  }
+}

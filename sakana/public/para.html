@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>段落切分</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .paragraph {
+            margin-bottom: 10px;
+        }
+
+        #upload {
+            margin-bottom: 20px;
+        }
+
+        #content {
+            text-align: left;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin: 20px auto;
+            width: 80%;
+            max-width: 600px;
+            background-color: white;
+        }
+
+        .paragraph {
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .paragraph label {
+            margin-left: 10px;
+        }
+
+        #generate {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #generate:hover {
+            background-color: #45a049;
+        }
+    </style>
+
+</head>
+
+<body>
+    <h1>段落切分</h1>
+    <input type="file" id="upload" accept=".docx">
+    <div id="content"></div>
+    <button id="generate">合并文本生成txt文件</button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
