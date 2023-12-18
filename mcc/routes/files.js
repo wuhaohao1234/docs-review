@@ -18,13 +18,13 @@ const storage = multer.diskStorage({
         let str = '';
 
         if(req.body.type_id==1){
-            str = 'C:\\Users\\lppppp\\Desktop\\词源识别\\bert_bilstm_crf_wangyh\\data\\1';
+            str = '/Users/abu0418/Desktop/work/docs-review/词源识别/bert_bilstm_crf_wangyh/data/1';
         }else if(req.body.type_id==2){
-            str = 'C:\\Users\\lppppp\\Desktop\\W2NER-new\\output';
+            str = '/Users/abu0418/Desktop/work/docs-review/W2NER-new/output';
         }else if(req.body.type_id==3){
-            str = 'C:\\Users\\lppppp\\Desktop\\文本分类\\bert_bilstm_crf_wangyh\\data\\1';
+            str = '/Users/abu0418/Desktop/work/docs-review/文本分类/bert_bilstm_crf_wangyh/data/1';
         }else if(req.body.type_id==4){
-            str = 'C:\\Users\\lppppp\\Desktop\\段落切分\\bert_bilstm_crf_wangyh\\data\\1';
+            str = '/Users/abu0418/Desktop/work/docs-review/段落切分/bert_bilstm_crf_wangyh/data/1';
         }
 
 
@@ -70,13 +70,13 @@ router.post('/download', function (req, res) {
     console.log(123, req.body)
     let filePath = ''; // 该文件的路径
     if(req.body.type_id==1){
-        filePath = 'C:\\Users\\lppppp\\Desktop\\词源识别\\bert_bilstm_crf_wangyh\\data\\out';
+        filePath = '/Users/abu0418/Desktop/work/docs-review/词源识别/bert_bilstm_crf_wangyh/data/out';
     }else if(req.body.type_id==2){
-        filePath = 'C:\\Users\\lppppp\\Desktop\\W2NER-new\\output';
+        filePath = '/Users/abu0418/Desktop/work/docs-review/W2NER-new/output';
     }else if(req.body.type_id==3){
-        filePath = 'C:\\Users\\lppppp\\Desktop\\文本分类\\bert_bilstm_crf_wangyh\\data\\1';
+        filePath = '/Users/abu0418/Desktop/work/docs-review/文本分类/bert_bilstm_crf_wangyh/data/1';
     }else if(req.body.type_id==4){
-        filePath = 'C:\\Users\\lppppp\\Desktop\\段落切分\\bert_bilstm_crf_wangyh\\data\\1';
+        filePath = '/Users/abu0418/Desktop/work/docs-review/段落切分/bert_bilstm_crf_wangyh/data/1';
     }
     console.log(filePath)
     let baseName = `${ req.body.tmpname.split('.')[0]}`//原名
@@ -84,13 +84,53 @@ router.post('/download', function (req, res) {
     console.log(baseName+`${req.body.isRaw == 1 ? "" : "treated"}.${ext}`)
     let tarname =baseName+`${req.body.isRaw == 1 ? "" : "treated"}.${ext}`
     try {
-        res.download(filePath+"\\"+tarname, baseName+`${req.body.isRaw == 1 ? "" : "treated"}.${ext}`, (err) => {
+        console.log(filePath + "/" + tarname);
+        console.log('-----------------------');
+        res.download(filePath+"/"+tarname, baseName+`${req.body.isRaw == 1 ? "" : "treated"}.${ext}`, (err) => {
             console.log('cuowu', err)
             if(err){
                 res.send({status:false,message:"文件未处理完成"})
             }
             
         });
+    } catch (err) {
+        res.send({ status: false })
+        console.error('下载文件出错：', err);
+        res.status(500).send('下载文件出错！');
+    }
+});
+
+router.post('/view', function (req, res) {
+    console.log(123, req.body)
+    let filePath = ''; // 该文件的路径
+    if(req.body.type_id==1){
+        filePath = '/Users/abu0418/Desktop/work/docs-review/词源识别/bert_bilstm_crf_wangyh/data/out';
+    }else if(req.body.type_id==2){
+        filePath = '/Users/abu0418/Desktop/work/docs-review/W2NER-new/output';
+    }else if(req.body.type_id==3){
+        filePath = '/Users/abu0418/Desktop/work/docs-review/文本分类/bert_bilstm_crf_wangyh/data/1';
+    }else if(req.body.type_id==4){
+        filePath = '/Users/abu0418/Desktop/work/docs-review/段落切分/bert_bilstm_crf_wangyh/data/1';
+    }
+    console.log(filePath)
+    let baseName = `${ req.body.tmpname.split('.')[0]}`//原名
+    let ext = `${ req.body.tmpname.split('.')[1]}`
+    console.log(baseName+`${req.body.isRaw == 1 ? "" : "treated"}.${ext}`)
+    let tarname =baseName+`${req.body.isRaw == 1 ? "" : "treated"}.${ext}`
+    try {
+        console.log(filePath + "/" + tarname);
+        console.log('-----------------------');
+        res.send({
+            status:true,
+            filePath:filePath+"/"+tarname
+        })
+        // res.download(filePath+"/"+tarname, baseName+`${req.body.isRaw == 1 ? "" : "treated"}.${ext}`, (err) => {
+        //     console.log('cuowu', err)
+        //     if(err){
+        //         res.send({status:false,message:"文件未处理完成"})
+        //     }
+            
+        // });
     } catch (err) {
         res.send({ status: false })
         console.error('下载文件出错：', err);

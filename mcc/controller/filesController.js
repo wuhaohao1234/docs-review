@@ -104,17 +104,17 @@ function Add(req, res, next) {
         }else if(req.body.type_id==4){
             pyUrl = "http://127.0.0.1:5000/process_file"
         }
-        axios({
-            url:pyUrl,
-            method: "POST",
-            data: {
-                filename:req.files[i].totalName,
-            },
-        }).then(res=>{
-            console.log(res)
-        }).catch(err=>{
-            console.log(err.message)
-        })
+        // axios({
+        //     url:pyUrl,
+        //     method: "POST",
+        //     data: {
+        //         filename:req.files[i].totalName,
+        //     },
+        // }).then(res=>{
+        //     console.log(res)
+        // }).catch(err=>{
+        //     console.log(err.message)
+        // })
       
 
     }
