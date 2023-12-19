@@ -150,6 +150,7 @@ export default {
     return {
       date: "",
       dialogVisible: false,
+      fileId: 0,
       vip_url: {
         url: "",
         id: null,
@@ -435,6 +436,15 @@ export default {
       })
         .then((res) => {
           const url = window.URL.createObjectURL(new Blob([res.data]));
+          this.fileId = tar.id
+          this.$axios({
+            url: `http://localhost:7735/history/getOne?fileId=${tar.id}`,
+            method: "get",
+          }).then(res => {
+            this.text = res.data[res.data.length - 1].text
+          }).catch(err => {
+            console.log(err);
+          })
 					this.text = ''
 					this.textarea = ''
           this.pdfUrl = url;

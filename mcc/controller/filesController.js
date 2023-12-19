@@ -1,5 +1,6 @@
 const fileModel = require('../model/fileModel.js')
 const userModel = require("../model/userModel")
+const historyModel = require("../model/historyModel.js")
 var path = require('path');
 const fs = require("fs")
 const ffmpeg = require("fluent-ffmpeg");
@@ -126,7 +127,14 @@ function Add(req, res, next) {
     fileModel.Add({
         list: route_arr
     }, data => {
-        console.log("插入返回", data)
+        const querySql = {
+            userId: req.body.userId,
+            fileId: data.insertId,
+            text: '我是默认的评论'
+        }
+        historyModel.Add(querySql, res => {
+            console.log(res);
+        })
         if (data.affectedRows > 0) {
             res.send({
                 status: true,
