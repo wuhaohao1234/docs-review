@@ -19,6 +19,7 @@
     "vue-baidu-map": "^0.21.22",
     "vue-clipboard2": "^0.3.3",
     "vue-contextmenu": "^1.5.11",
+    "vue-pdf": "^4.3.0",
     "vue-router": "^3.5.1",
     "vuex": "^3.6.2"
   },
