@@ -22,7 +22,6 @@ router.get('/getOne', function (req, res, next) {
 })
 
 router.post('/add', (req, res, next) => {
-    res.send(req.body)
     const {
       userId,
       fileId,

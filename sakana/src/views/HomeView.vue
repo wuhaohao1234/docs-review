@@ -20,7 +20,13 @@
         </template>
       </el-table-column>
       <el-table-column prop="username" label="用户" width=""> </el-table-column>
-      <el-table-column prop="time" label="时间" width="100"> </el-table-column>
+      <el-table-column prop="time" label="时间" width="200">
+        <template slot-scope="scope">
+          <div class="overbox" :title="scope.row.time">
+            {{ scope.row.time }}
+          </div>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" width="500">
         <template slot-scope="scope">
           <!-- <el-button @click="reviseDialogShow(scope.row)" size="mini" type="success" plain
@@ -93,10 +99,10 @@
       <el-input
         type="textarea"
         :autosize="{ minRows: 2, maxRows: 4 }"
-				disabled
+        disabled
         placeholder="上一条审核内容"
         v-model="text"
-				style="margin-bottom: 20px;"
+        style="margin-bottom: 20px"
       >
       </el-input>
 
@@ -110,9 +116,7 @@
 
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="handleSubmit"
-          >确 定</el-button
-        >
+        <el-button type="primary" @click="handleSubmit">确 定</el-button>
       </span>
     </el-dialog>
 
@@ -136,7 +140,13 @@
 </template>
 
 <script>
-import { getVipUrl, setVipUrl, plantList, plantDelete } from "../http/api.js";
+import {
+  getVipUrl,
+  setVipUrl,
+  plantList,
+  plantDelete,
+  stuList,
+} from "../http/api.js";
 import Wave from "../components/animate/Wave.vue";
 import PlantQuery from "./plant/plants/components/PlantQuery";
 import PlantOperation from "./plant/plants/components/PlantOperation";
@@ -160,7 +170,7 @@ export default {
       selectRowArr: [],
       pdfUrl: "",
       textarea: "",
-			text: '',
+      text: "",
       queryParams: {
         pageNum: 1, //当前页数
         pageSize: 20, //每页显示多少条
@@ -219,18 +229,39 @@ export default {
         this.baseInit();
       });
     },
-		handleSubmit() {
-			console.log(this.textarea);
-			if (this.textarea === '') {
-				this.dialogVisible = false
-				return	
-			} else {
-				this.text = this.textarea
-				setTimeout(() => {
-					this.dialogVisible = false
-				}, 500);
-			}
-		},
+    handleSubmit() {
+      console.log(this.textarea);
+      const userMation = JSON.parse(localStorage.getItem("userMation"));
+      console.log(userMation);
+      if (this.textarea === "") {
+        this.dialogVisible = false;
+        return;
+      } else {
+        this.text = this.textarea;
+        this.$axios({
+          url: "http://localhost:7735/history/add",
+          method: "post",
+          data: {
+            userId: userMation.id,
+            fileId: this.fileId,
+            text: this.text,
+          },
+        })
+          .then((res) => {
+            if (res.data) {
+              this.$message.success("保存成功");
+            } else {
+              this.$message.error("保存失败");
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        setTimeout(() => {
+          this.dialogVisible = false;
+        }, 500);
+      }
+    },
     baseInit() {
       getVipUrl().then((res) => {
         console.log(res);
@@ -421,6 +452,21 @@ export default {
           console.error("Error downloading file:", error);
         });
     },
+    getAllUsers() {
+      return stuList({
+        pageNum: 1,
+        pageSize: 20,
+      }).then((res) => {
+        console.log(res);
+        if (res.status) {
+          // this.queryParams.userList = res.list
+          return res.list
+          // this.queryParamsInit(res.total)
+        } else {
+          this.$message.error("查询失败");
+        }
+      });
+    },
     viewRaw(tar, isRaw) {
       this.$axios({
         url: "http://localhost:7735/filesm/download", // Express 服务器地址
@@ -436,17 +482,30 @@ export default {
       })
         .then((res) => {
           const url = window.URL.createObjectURL(new Blob([res.data]));
-          this.fileId = tar.id
+          this.fileId = tar.id;
           this.$axios({
             url: `http://localhost:7735/history/getOne?fileId=${tar.id}`,
             method: "get",
-          }).then(res => {
-            this.text = res.data[res.data.length - 1].text
-          }).catch(err => {
-            console.log(err);
           })
-					this.text = ''
-					this.textarea = ''
+            .then((res) => {
+              console.log(res.data);
+              this.getAllUsers().then(resulr => {
+                console.log('user');
+                console.log(resulr);
+                console.log(res.data[res.data.length - 1].userId);
+                const find = resulr.find(item => {
+                  return item.id == res.data[res.data.length - 1].userId
+                    // this.user = item
+                })
+                console.log(find);
+                this.text = '审核人：' + find?.username + ':' + res.data[res.data.length - 1].text;
+              })
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+          this.text = "";
+          this.textarea = "";
           this.pdfUrl = url;
           this.dialogVisible = true;
         })

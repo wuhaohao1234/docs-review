@@ -92,6 +92,7 @@ function Add(req, res, next) {
             status: 0,
             fileType: req.files[i].ext,
             username: req.body.username,
+            time: new Date().toUTCString()
         })
         console.log('处理')
         console.log(223)

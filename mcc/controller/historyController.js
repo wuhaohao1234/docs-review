@@ -7,7 +7,7 @@ function getList(params, callback) {
 }
 
 function add(params, callback) {
-  historyModel.add(params, data => {
+  historyModel.Add(params, data => {
     callback(data)
   })
 }

@@ -62,13 +62,13 @@ function info_aim_file_mation(params, callback) {
 // 添加文件
 function Add(data, callback) {
 	console.log(data)
-	var str = `INSERT INTO ${info_files}(tmpname,nativename,operationId,status,userId,fileType,username)  values`
+	var str = `INSERT INTO ${info_files}(tmpname,nativename,operationId,status,userId,fileType,username,time)  values`
 	for (let i = 0; i < data.list.length; i++) {
 		console.log(i, data.list[i])
 		if (i != data.list.length - 1) {
-			str += `('${data.list[i].tmpname}','${data.list[i].nativename}','${data.list[i].operationId}','${data.list[i].status}','${data.list[i].userId}','${data.list[i].fileType}','${data.list[i].username}'),`
+			str += `('${data.list[i].tmpname}','${data.list[i].nativename}','${data.list[i].operationId}','${data.list[i].status}','${data.list[i].userId}','${data.list[i].fileType}','${data.list[i].username}', '${data.list[i].time}'),`
 		} else {
-			str += `('${data.list[i].tmpname}','${data.list[i].nativename}','${data.list[i].operationId}','${data.list[i].status}','${data.list[i].userId}','${data.list[i].fileType}','${data.list[i].username}')`
+			str += `('${data.list[i].tmpname}','${data.list[i].nativename}','${data.list[i].operationId}','${data.list[i].status}','${data.list[i].userId}','${data.list[i].fileType}','${data.list[i].username}', '${data.list[i].time}')`
 			console.log('str', str)
 		}
 		console.log(i, data.list.length)
