@@ -27,16 +27,22 @@
 							<i class="el-icon-menu"></i>
 							<span slot="title">首页</span>
 						</el-menu-item>
-						<el-submenu index="系统管理" v-if="userMation.role==1">
+						<el-submenu index="系统管理" v-if="userMation.role!==0">
 							<template slot="title">
 								<i class="el-icon-setting"></i>
 								<span>系统管理</span>
 							</template>
 							<el-menu-item-group>
-								<el-menu-item index="用户列表">
+								<el-menu-item index="用户列表" v-if="userMation.role==1" >
 									<template slot="title">
 										<i class="el-icon-user"></i>
 										<span>用户列表</span>
+									</template>
+								</el-menu-item>
+								<el-menu-item index="审核列表">
+									<template slot="title">
+										<i class="el-icon-user"></i>
+										<span>审核列表</span>
 									</template>
 								</el-menu-item>
 							</el-menu-item-group>
@@ -167,6 +173,15 @@
 						{
 							name: '用户列表',
 							path: '/users',
+							type: 'success',
+							beforeMenuName: '系统管理',
+							status: false,
+							closeAble: true,
+							exist: false,
+						},
+						{
+							name: '审核列表',
+							path: '/review',
 							type: 'success',
 							beforeMenuName: '系统管理',
 							status: false,

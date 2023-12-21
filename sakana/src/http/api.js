@@ -483,7 +483,13 @@ export function deviceTopicImgSearchByTopic(data) {
 		data
 	});
 }
-
+export function plantAllList(data) {
+	return request_node({
+		url: "/filesm/getAlllist",
+		method: "get",
+		params: data
+	});
+}
 /**
  * @param {Object} data
  * 我也不知道用没用到下面两个api

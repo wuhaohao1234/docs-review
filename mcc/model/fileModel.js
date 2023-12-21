@@ -26,6 +26,21 @@ function infoSearchFile(params, callback) {
 		callback(data)
 	})
 }
+function getAllList(params, callback) {
+	console.log(params)
+	console.log("1111223")
+
+	// console.log(`select * from  ${info_files} where type_id=${params.type_id} limit ${(params.pageNum - 1) * params.pageSize},${params.pageSize}`)
+	var str = `select * from  ${info_files}`
+	// 如果all为true则表明身份为管理员和专家
+	if (params.all == "true") {
+		str = `select * from  ${info_files}`
+	}
+	console.log(str, "查询语句")
+	sql.sqlQuery(str, data => {
+		callback(data)
+	})
+}
 // 得到文件列表
 function getList(params, callback) {
 	console.log(params)
@@ -124,6 +139,20 @@ function dltMore(id_arr, callback) {
 		console.log(results)
 	})
 }
+function updateById(data, callback) {
+	const id = data.id
+	const visable = data.visable === 1 ? 0: 1
+	const sqlStr = `UPDATE files SET visable = ${visable} WHERE id = ${id};`
+	db.query(sqlStr, (err, results) => {
+		if (err) {
+			console.log(err.message)
+			callback(false)
+		} else if (results.affectedRows === 1) {
+			console.log(results)
+			callback(true)
+		}
+	})
+}
 // 更新单个文件
 function updateOne(data, callback) {
 	console.log(data)
@@ -160,6 +189,8 @@ module.exports = {
 	Add,
 	dltOne,
 	updateOne,
-	addNoticeImg
+	addNoticeImg,
+	getAllList,
+	updateById,
 }
 

@@ -27,7 +27,7 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="500">
+      <el-table-column label="操作" width="">
         <template slot-scope="scope">
           <!-- <el-button @click="reviseDialogShow(scope.row)" size="mini" type="success" plain
 						icon="el-icon-search">修改
@@ -37,36 +37,8 @@
             size="mini"
             type="success"
             plain
-            icon="el-icon-delete"
           >
-            文件处理</el-button
-          >
-          <el-button
-            @click="downloadRaw(scope.row, 1)"
-            size="mini"
-            type="success"
-            plain
-            icon="el-icon-delete"
-          >
-            下载原文件</el-button
-          >
-          <el-button
-            @click="downloadRaw(scope.row, 0)"
-            size="mini"
-            type="success"
-            plain
-            icon="el-icon-delete"
-          >
-            下载处理后文件</el-button
-          >
-          <el-button
-            @click="dltOne(scope.row.id)"
-            size="mini"
-            type="danger"
-            plain
-            icon="el-icon-delete"
-          >
-            删除记录</el-button
+            文件预览</el-button
           >
           <!-- <el-button @click="detailDialogShow(scope.row)" size="mini" type="info" plain icon="el-icon-more">
 						更多
@@ -90,7 +62,7 @@
       @reloadTable="loadPlants()"
     />
     <el-dialog
-      title="审核"
+      title="预览"
       :visible.sync="dialogVisible"
       width="30%"
       :before-close="handleClose"
@@ -106,17 +78,9 @@
       >
       </el-input>
 
-      <el-input
-        type="textarea"
-        :autosize="{ minRows: 2, maxRows: 4 }"
-        placeholder="请输入意见"
-        v-model="textarea"
-      >
-      </el-input>
-
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="handleSubmit">确 定</el-button>
+        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
       </span>
     </el-dialog>
 
@@ -146,6 +110,7 @@ import {
   plantList,
   plantDelete,
   stuList,
+plantAllList,
 } from "../http/api.js";
 import Wave from "../components/animate/Wave.vue";
 import PlantQuery from "./plant/plants/components/PlantQuery";
@@ -408,7 +373,7 @@ export default {
     loadPlants() {
       const userMation = JSON.parse(localStorage.getItem("userMation"));
       console.log(userMation);
-      plantList({
+      plantAllList({
         pageNum: this.queryParams.pageNum,
         pageSize: this.queryParams.pageSize,
         type_id: 1,
@@ -416,8 +381,8 @@ export default {
         all: userMation.role == 1 || userMation.role == 2,
       }).then((res) => {
         console.log(res);
-        this.queryParams.userList = res.list;
-        this.queryParamsInit(res.total);
+        this.queryParams.userList = res.filter(item => item.visable === 1);
+        this.queryParamsInit(10);
       });
     },
     downloadRaw(tar, isRaw) {

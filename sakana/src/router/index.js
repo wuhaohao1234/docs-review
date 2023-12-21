@@ -5,6 +5,7 @@ import LandView from '../views/LandView.vue'
 import HomeView from '../views/HomeView.vue'
 // 系统管理页面
 import usersView from '../views/system/usersView.vue'
+import reviewView from '../views/system/reviewView.vue'
 // 资源管理
 import plantListView from '../views/plant/plantListView.vue'
 import txtsListView from '../views/plant/txtsListView.vue'
@@ -43,6 +44,13 @@ const routes = [{
 				}
 			},
 
+			{
+				path: '/review',
+				component: reviewView,
+				meta: {
+					requireToken: true
+				}
+			},
 			{
 				path: '/users',
 				component: usersView,

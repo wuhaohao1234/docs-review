@@ -74,6 +74,11 @@ function getList(params, callback) {
         })
     })
 }
+function getAllList(params, callback) {
+    fileModel.getAllList(params, data => {
+        callback(data)
+    })
+}
 // 添加文件
 function Add(req, res, next) {
     console.log('上传文件')
@@ -183,6 +188,22 @@ function dltMore(idArr, callback) {
         }
     })
 }
+
+function updateById(data, callback) {
+    fileModel.updateById(data, data => {
+        if (data) {
+            callback({
+                status: true,
+                message: '修改成功'
+            })
+        } else {
+            callback({
+                status: false,
+                message: '修改失败'
+            })
+        }
+    })
+}
 // 更新单个文件
 function updateOne(data, callback) {
     fileModel.updateOne(data, data => {
@@ -225,7 +246,7 @@ function infoTxtDetail(txt, callback) {
     })
 }
 
-module.exports = { addNoticeImg, infoSearchFile, infoTxtDetail, getOne, getList, Add, dltOne, dltMore, updateOne }
+module.exports = { addNoticeImg, infoSearchFile, infoTxtDetail, getOne, getList, getAllList, Add, dltOne, dltMore, updateOne, updateById }
 
 function videoSlice(videoName, ext) {
     console.log("创建文件夹", videoName, ext)

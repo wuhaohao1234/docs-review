@@ -150,6 +150,13 @@ router.get('/infoSearchFile', function (req, res, next) {
 // 前台编辑公告添加图片
 router.post('/notic_img', upload.single("file"), filesController.addNoticeImg)
 
+router.get('/getAlllist', function (req, res, next) {
+    console.log(req.query, 'filesList')
+    filesController.getAllList(req.query, data => {
+        res.send(data)
+    })
+})
+
 // 获取指定pageNum和pageSize的指定类型文件
 router.get('/list', function (req, res, next) {
     console.log(req.query, 'filesList')
@@ -197,6 +204,13 @@ router.post('/revise', function (req, res, next) {
     console.log("123", req.params)
     console.log(req.body)
     filesController.updateOne(req.body, data => {
+        res.send(data)
+    })
+})
+
+// 修改单个文件信息
+router.post('/updateVisable', function (req, res, next) {
+    filesController.updateById(req.body, data => {
         res.send(data)
     })
 })
