@@ -39,7 +39,7 @@
 										<span>用户列表</span>
 									</template>
 								</el-menu-item>
-								<el-menu-item index="审核列表">
+								<el-menu-item index="审核列表" v-if="userMation.role==1 || userMation.role==2" >
 									<template slot="title">
 										<i class="el-icon-user"></i>
 										<span>审核列表</span>
