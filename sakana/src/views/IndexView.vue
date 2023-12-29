@@ -321,7 +321,7 @@
 	#indexView_container {
 		width: 100%;
 		height: 100%;
-		min-width: 1800px;
+		// min-width: 1800px;
 		min-height: 900px;
 
 		.el-container {

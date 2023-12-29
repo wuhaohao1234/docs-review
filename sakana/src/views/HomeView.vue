@@ -1,66 +1,35 @@
 <template>
   <div id="container">
     <!-- <plant-operation @dltMore='dltMore()' :operationShow='operationShow' /> -->
+    <el-card class="box-card">
+      <li v-for="(item, key) in queryParams.userList" :key="key" @click="viewRaw(item, true)"  >
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          "
+        >
+          <span>
+            <i class="el-icon-notebook-2"></i>
+            {{ item.nativename }}
+          </span>
+          <span style="color: #bababa;font-size: 12px;" >
+            <span style="margin-right: 20px;" >
+              {{ item.username }}
+            </span>
+            {{ new Date(item.time).getFullYear() }}
+            年
+            {{new Date(item.time).getMonth() + 1 }}
+            月
+            {{new Date(item.time).getDate() }}
+            日
+          </span>
+        </div>
 
-    <el-table
-      stripe
-      :data="queryParams.userList"
-      style="width: 100%"
-      :row-class-name="tableRowClassName"
-      header-row-class-name="info-row"
-      @selection-change="handleSelectionChange"
-    >
-      <el-table-column type="selection" width=""> </el-table-column>
-      <el-table-column prop="id" label="ID" width="55"> </el-table-column>
-      <el-table-column prop="nativename" label="文件名" width="">
-        <template slot-scope="scope">
-          <div class="overbox" :title="scope.row.nativename">
-            {{ scope.row.nativename }}
-          </div>
-        </template>
-      </el-table-column>
-      <el-table-column prop="username" label="用户" width=""> </el-table-column>
-      <el-table-column prop="time" label="时间" width="200">
-        <template slot-scope="scope">
-          <div class="overbox" :title="scope.row.time">
-            {{ scope.row.time }}
-          </div>
-        </template>
-      </el-table-column>
-      <el-table-column label="操作" width="">
-        <template slot-scope="scope">
-          <!-- <el-button @click="reviseDialogShow(scope.row)" size="mini" type="success" plain
-						icon="el-icon-search">修改
-					</el-button> -->
-          <el-button
-            @click="viewRaw(scope.row, 1)"
-            size="mini"
-            type="success"
-            plain
-          >
-            文件预览</el-button
-          >
-          <!-- <el-button @click="detailDialogShow(scope.row)" size="mini" type="info" plain icon="el-icon-more">
-						更多
-					</el-button> -->
-        </template>
-      </el-table-column>
-    </el-table>
-    <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page="queryParams.pageNum"
-      :page-sizes="[2, 4, 20, 30]"
-      :page-size="queryParams.pageSize"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="queryParams.total"
-    >
-    </el-pagination>
-    <plant-add-dialog :plantsData="backData.data" @reloadTable="loadPlants()" />
-    <plant-revise-dialog
-      :plantsData="backData.data"
-      @reloadTable="loadPlants()"
-    />
+        <el-divider></el-divider>
+      </li>
+    </el-card>
     <el-dialog
       title="预览"
       :visible.sync="dialogVisible"
@@ -80,7 +49,9 @@
 
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+        <el-button type="primary" @click="dialogVisible = false"
+          >确 定</el-button
+        >
       </span>
     </el-dialog>
 
@@ -110,7 +81,7 @@ import {
   plantList,
   plantDelete,
   stuList,
-plantAllList,
+  plantAllList,
 } from "../http/api.js";
 import Wave from "../components/animate/Wave.vue";
 import PlantQuery from "./plant/plants/components/PlantQuery";
@@ -381,7 +352,7 @@ export default {
         all: userMation.role == 1 || userMation.role == 2,
       }).then((res) => {
         console.log(res);
-        this.queryParams.userList = res.filter(item => item.visable === 1);
+        this.queryParams.userList = res.filter((item) => item.visable === 1);
         this.queryParamsInit(10);
       });
     },
@@ -425,7 +396,7 @@ export default {
         console.log(res);
         if (res.status) {
           // this.queryParams.userList = res.list
-          return res.list
+          return res.list;
           // this.queryParamsInit(res.total)
         } else {
           this.$message.error("查询失败");
@@ -454,17 +425,21 @@ export default {
           })
             .then((res) => {
               console.log(res.data);
-              this.getAllUsers().then(resulr => {
-                console.log('user');
+              this.getAllUsers().then((resulr) => {
+                console.log("user");
                 console.log(resulr);
                 console.log(res.data[res.data.length - 1].userId);
-                const find = resulr.find(item => {
-                  return item.id == res.data[res.data.length - 1].userId
-                    // this.user = item
-                })
+                const find = resulr.find((item) => {
+                  return item.id == res.data[res.data.length - 1].userId;
+                  // this.user = item
+                });
                 console.log(find);
-                this.text = '审核人：' + find?.username + ':' + res.data[res.data.length - 1].text;
-              })
+                this.text =
+                  "审核人：" +
+                  find?.username +
+                  ":" +
+                  res.data[res.data.length - 1].text;
+              });
             })
             .catch((err) => {
               console.log(err);
@@ -581,5 +556,9 @@ export default {
       text-align: center;
     }
   }
+}
+li {
+  list-style: none;
+  cursor: pointer;
 }
 </style>
