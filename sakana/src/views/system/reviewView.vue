@@ -104,7 +104,15 @@
       width="30%"
       :before-close="handleClose"
     >
-      <pdf ref="pdf" :src="pdfUrl"> </pdf>
+      <!-- <pdf v-if="isPdf" ref="pdf" :src="pdfUrl"> </pdf> -->
+      <vue-office-pdf 
+        :src="pdfUrl"
+        v-if="isPdf"
+      />
+      <vue-office-docx 
+        :src="pdfUrl"
+        v-if="!isPdf"
+      />
       <el-input
         type="textarea"
         :autosize="{ minRows: 2, maxRows: 4 }"
@@ -163,6 +171,10 @@ import PlantAddDialog from "../plant/plants/components/PlantAddDialog";
 import PlantReviseDialog from "../plant/plants/components/PlantReviseDialog";
 import PlantDetailDialog from "../plant/plants/components/PlantDetailDialog";
 import pdf from "vue-pdf";
+import VueOfficeDocx from '@vue-office/docx'
+import VueOfficePdf from '@vue-office/pdf'
+//引入相关样式
+import '@vue-office/docx/lib/index.css'
 
 export default {
   data() {
@@ -202,7 +214,8 @@ export default {
         batchRevise: true,
         batchDelete: true,
       },
-      userMation: {}
+      userMation: {},
+      isPdf: false,
     };
   },
   async created() {
@@ -221,6 +234,8 @@ export default {
     PlantReviseDialog, //修改信息弹窗
     PlantDetailDialog, //详情信息弹窗
     pdf,
+    VueOfficeDocx,
+    VueOfficePdf
   },
   mounted() {
     // this.baseInit()
@@ -504,6 +519,11 @@ export default {
         responseType: "blob", // 指定响应类型为二进制流
       })
         .then((res) => {
+          if (res.data.type === 'application/pdf') {
+            this.isPdf = true
+          } if (res.data.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'){
+            this.isPdf = false
+          }
           const url = window.URL.createObjectURL(new Blob([res.data]));
           this.fileId = tar.id;
           this.$axios({

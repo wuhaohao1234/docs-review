@@ -1315,6 +1315,16 @@
   dependencies:
     "@types/node" "*"
 
+"@vue-office/docx@^1.6.0":
+  version "1.6.0"
+  resolved "https://registry.npmmirror.com/@vue-office/docx/-/docx-1.6.0.tgz#af451d20c24b9075da1506c6b7024e8846e173bd"
+  integrity sha512-OKEapOPq223uszA8mRSOWPhdfBchJa6sIqP46eMrMMe5RSUrG9m3QE/o0JBIaMgxDrtNd7aI9CvF2kDvb7G2hw==
+
+"@vue-office/pdf@^1.6.0":
+  version "1.6.0"
+  resolved "https://registry.npmmirror.com/@vue-office/pdf/-/pdf-1.6.0.tgz#647aeff8108fb49c2ccb8dad011660c638a53739"
+  integrity sha512-SRv+gOhHlk2J+SdivvVvum93FuI4sU3XIh6u1jFkNr3+cXxRjMT2PTSxQO9b/1NmGB50oc+p+C+DrgNmMW4/vQ==
+
 "@vue/babel-helper-vue-jsx-merge-props@^1.4.0":
   version "1.4.0"
   resolved "https://registry.npmmirror.com/@vue/babel-helper-vue-jsx-merge-props/-/babel-helper-vue-jsx-merge-props-1.4.0.tgz#8d53a1e21347db8edbe54d339902583176de09f2"
@@ -1569,6 +1579,11 @@
     vue-template-es2015-compiler "^1.9.0"
   optionalDependencies:
     prettier "^1.18.2 || ^2.0.0"
+
+"@vue/composition-api@^1.7.2":
+  version "1.7.2"
+  resolved "https://registry.npmmirror.com/@vue/composition-api/-/composition-api-1.7.2.tgz#0b656f3ec39fefc2cf40aaa8c12426bcfeae1b44"
+  integrity sha512-M8jm9J/laYrYT02665HkZ5l2fWTK4dcVg3BsDHm/pfz+MjDYwX+9FUaZyGwEyXEDonQYRCo0H7aLgdklcIELjw==
 
 "@vue/vue-loader-v15@npm:vue-loader@^15.9.7":
   version "15.11.1"
@@ -5687,6 +5702,11 @@ vue-contextmenu@^1.5.11:
   integrity sha512-H9CdXqiVMRJsUX+ah9k2olywZUiJ+sq6EkCGkLza+DFx0PChIJzZPlsVNPOMgcFInYkigh+QRw2S4Bu7nUXGlA==
   dependencies:
     vue "^2.6.9"
+
+vue-demi@0.13.11:
+  version "0.13.11"
+  resolved "https://registry.npmmirror.com/vue-demi/-/vue-demi-0.13.11.tgz#7d90369bdae8974d87b1973564ad390182410d99"
+  integrity sha512-IR8HoEEGM65YY3ZJYAjMlKygDQn25D5ajNFNoKh9RSDMQtlzCxtfQjdQgv9jjK+m3377SsJXY8ysq8kLCZL25A==
 
 vue-hot-reload-api@^2.3.0:
   version "2.3.4"
