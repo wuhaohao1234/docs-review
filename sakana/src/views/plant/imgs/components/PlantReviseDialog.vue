@@ -129,15 +129,15 @@
 		},
 		methods: {
 			baseInit() {
-				ichiGradePlantList({
-					pageNum: 1,
-					pageSize: 120,
-					type_id: 3,
-					all: true
-				}).then(res => {
-					// console.log(res)
-					this.baseData.ichiTypeList = res.data.list
-				})
+				// ichiGradePlantList({
+				// 	pageNum: 1,
+				// 	pageSize: 120,
+				// 	type_id: 3,
+				// 	all: true
+				// }).then(res => {
+				// 	// console.log(res)
+				// 	this.baseData.ichiTypeList = res.data.list
+				// })
 			},
 			handleClick() {
 			},

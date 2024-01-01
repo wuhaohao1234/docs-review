@@ -117,15 +117,15 @@
 				}
 			},
 			loadIchiType_list() {
-				ichiGradePlantList({
-					pageNum: 0,
-					pageSize: 0,
-					type_id: 3,
-					all: true
-				}).then(res => {
-					console.log(res)
-					this.ichiType_list = res.data.list
-				})
+				// ichiGradePlantList({
+				// 	pageNum: 0,
+				// 	pageSize: 0,
+				// 	type_id: 3,
+				// 	all: true
+				// }).then(res => {
+				// 	console.log(res)
+				// 	this.ichiType_list = res.data.list
+				// })
 			},
 			// 删除多个角色
 			dltMore() {
